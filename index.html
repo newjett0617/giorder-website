@@ -5,10 +5,17 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+          integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+          crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
   <link rel="stylesheet" href="main.css">
   <title>Document</title>
 </head>
@@ -18,42 +25,36 @@
     <div class="login">
       <input type="text" maxlength="10">
       <br>
-      <button class="login-btn">登入</button>
+      <button class="login-btn" onclick="login()">登入</button>
     </div>
   </div>
   <div class="home">
     <div class="my-nav">
-      <p class="date">2020-09-18</p>
+      <p class="date"></p>
     </div>
     <div class="container">
-      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">好想工作室A</button>
-      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">好想工作室B</button>
-      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">好想工作室C</button>
-      <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">好想工作室D</button>
+      <div></div>
     </div>
   </div>
   <div class="detail">
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 class="modal-title" id="exampleModalLabel">好想工作室B</h3>
+            <h3 class="modal-title" id="exampleModalLabel">
+              <div></div>
+            </h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <h4>09-18 共10個便當</h4>
-            <p>可樂雞飯</p>
-            <p>數量：5</p>
-            <p>可樂雞飯</p>
-            <p>數量：5</p>
-            <p>可樂雞飯</p>
-            <p>數量：5</p>
+            <div></div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">列印</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="print()">列印</button>
           </div>
         </div>
       </div>
@@ -61,14 +62,138 @@
   </div>
 </div>
 <script>
+  const url = 'https://script.google.com/macros/s/AKfycbycdvCLDi1BI6hf-sQSzZ1lkCkl5RVnaajXMDX66AghMtlL--2p/exec';
+  let response = {};
+  let gan = '';
+  let gid = '';
   const arr = [];
   if (arr.length >= 8) {
-      document.querySelector('.modal-dialog').style = `
+    document.querySelector('.modal-dialog').style = `
         top:0;
         left:0;
         transform: none;
         margin: 30px auto;
       `;
+  }
+
+  function login() {
+    const pwd = getPwdInputValue();
+    if (pwd === '') {
+      alert('輸入不能空白');
+      return;
+    }
+    checkPwd(pwd);
+  }
+
+  function print() {
+    // todo
+  }
+
+  function checkPwd(pwd) {
+    const myHeaders = new Headers();
+    myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append('a', 'pwd');
+    urlencoded.append('pwd', pwd);
+
+    const options = {
+      method: 'POST',
+      headers: myHeaders,
+      body: urlencoded,
+      redirect: 'follow',
+    };
+
+    fetch(url, options)
+      .then(response => response.json())
+      .then(result => {
+        if (result.status === 200) {
+          response = result;
+          gan = result.an;
+          handleChangeMyNavDateAndRenderButtonAndDisplayNoneLoginCover(result);
+        } else {
+          alert('輸入錯誤');
+        }
+      })
+      .catch(error => alert(error));
+  }
+
+  function handleChangeMyNavDateAndRenderButtonAndDisplayNoneLoginCover(result) {
+    const date = result.date;
+    const data = result.data;
+    changeMyNavDate(date);
+    insertButtonsToContainer(data);
+    displayNoneLoginCover();
+  }
+
+  function getPwdInputValue() {
+    return document.querySelector('body > div > div.login-cover > div > input[type=text]').value;
+  }
+
+  function displayNoneLoginCover() {
+    document.querySelector('body > div > div.login-cover').style.display = 'none';
+  }
+
+  function changeMyNavDate(date) {
+    document.querySelector('body > div > div.home > div.my-nav > p').innerHTML = date;
+  }
+
+  function insertButtonsToContainer(data) {
+    const el = document.querySelector('body > div > div.home > div.container');
+    el.removeChild(document.querySelector('body > div > div.home > div.container > div'))
+    const div = document.createElement('div');
+    data.forEach(item => {
+      const btn = document.createElement('BUTTON');
+      btn.setAttribute('type', 'button');
+      btn.setAttribute('class', 'btn');
+      btn.setAttribute('data-toggle', 'modal');
+      btn.setAttribute('data-target', '#exampleModal');
+      btn.setAttribute('onclick', `show(${item.id})`);
+      btn.textContent = item.name;
+      div.appendChild(btn);
+    })
+    el.appendChild(div);
+  }
+
+  function show(id) {
+    gid = id;
+    const obj = getResponseById(id);
+    changeModalTitleContent(obj);
+    changeModalBodyContent(obj);
+  }
+
+  function getResponseById(id) {
+    return response.data.find(item => item.id === id);
+  }
+
+  function changeModalBodyContent(obj) {
+    const el = document.querySelector('#exampleModal > div > div > div.modal-body');
+    el.removeChild(document.querySelector('#exampleModal > div > div > div.modal-body > div'));
+    const div = document.createElement('div');
+    const h4 = document.createElement('h4');
+    const sum = obj.orders.reduce((total, item) => total + item.count, 0);
+    h4.textContent = `${response.date} 共 ${sum} 個便當`;
+    div.appendChild(h4);
+    obj.orders.forEach(function (item) {
+      const p1 = document.createElement('p');
+      const p2 = document.createElement('p');
+      p1.textContent = item.name;
+      p2.textContent = `數量：${item.count}`
+      div.appendChild(p1);
+      div.appendChild(p2);
+    });
+    el.appendChild(div);
+  }
+
+  function changeModalTitleContent(obj) {
+    const el = document.querySelector('#exampleModalLabel');
+    el.removeChild(document.querySelector('#exampleModalLabel > div'));
+    const a = document.createElement('a');
+    a.setAttribute('href', obj.sheetUrl);
+    a.textContent = obj.name;
+    const div = document.createElement('div');
+    div.appendChild(a);
+    el.appendChild(div);
   }
 </script>
 </body>
