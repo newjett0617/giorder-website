@@ -61,6 +61,12 @@
     </div>
   </div>
 </div>
+<div class="lds-ring" style="display:none;">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
 <script>
   const url = 'https://script.google.com/macros/s/AKfycbycdvCLDi1BI6hf-sQSzZ1lkCkl5RVnaajXMDX66AghMtlL--2p/exec';
   let response = {};
@@ -85,11 +91,53 @@
     checkPwd(pwd);
   }
 
+  function pending(on = true) {
+    const el = document.querySelector('body > div.lds-ring');
+    if (on) {
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  }
+
   function print() {
-    // todo
+    if (confirm('確定列印？')) {
+      pending(true);
+      const myHeaders = new Headers();
+      myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+
+      const urlencoded = new URLSearchParams();
+      urlencoded.append('a', gan);
+      urlencoded.append('id', gid);
+
+      const options = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow',
+      };
+
+      fetch(url, options)
+        .then(response => response.json())
+        .then(result => {
+          console.log(result)
+          if (result.status === 200) {
+            pending(false);
+            alert('列印成功');
+          } else {
+            pending(false);
+            alert('列印錯誤');
+          }
+        })
+        .catch(error => {
+          alert(error);
+          pending(false);
+        });
+    }
   }
 
   function checkPwd(pwd) {
+    pending(true);
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
@@ -111,7 +159,9 @@
           response = result;
           gan = result.an;
           handleChangeMyNavDateAndRenderButtonAndDisplayNoneLoginCover(result);
+          pending(false);
         } else {
+          pending(false);
           alert('輸入錯誤');
         }
       })
