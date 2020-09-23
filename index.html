@@ -61,11 +61,13 @@
     </div>
   </div>
 </div>
-<div class="lds-ring" style="display:none;">
-  <div></div>
-  <div></div>
-  <div></div>
-  <div></div>
+<div class="lds-ring-cover" style="display: none;">
+  <div class="lds-ring" >
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
 </div>
 <script>
   const url = 'https://script.google.com/macros/s/AKfycbycdvCLDi1BI6hf-sQSzZ1lkCkl5RVnaajXMDX66AghMtlL--2p/exec';
@@ -92,7 +94,7 @@
   }
 
   function pending(on = true) {
-    const el = document.querySelector('body > div.lds-ring');
+    const el = document.querySelector('body > div.lds-ring-cover');
     if (on) {
       el.style.display = 'block';
     } else {
@@ -144,7 +146,6 @@
     const urlencoded = new URLSearchParams();
     urlencoded.append('a', 'pwd');
     urlencoded.append('pwd', pwd);
-
     const options = {
       method: 'POST',
       headers: myHeaders,
